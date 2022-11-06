@@ -15,7 +15,7 @@ const removeFromArray = function() {
   return myArray;
 };
 
-//run the function for stepper
+//run the function for testing (index.html)
 //console.log(removeFromArray([1,2,3,4],3));
 
 // Do not edit below this line
