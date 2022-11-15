@@ -11,10 +11,17 @@ const caesar = function(oString, shift) {
 
   function shiftUnicode(unicodeArray, shift) {
     let shiftedArray = [];
-    
+
 //add an if(maybe switch?) to only shift alpha unicode range, and loop if necessary
     for(let i = 0; i < unicodeArray.length; i++){
-      shiftedArray[i] = parseFloat(unicodeArray) + parseFloat(shift);
+      if(unicodeArray[i] < 66 || unicodeArray[i] > 122) {
+        shiftedArray[i] = unicodeArray[i];
+      } else if(unicodeArray[i] > 90 && unicodeArray[i] < 97) {
+        shiftedArray[i] = unicodeArray[i];
+      } else {
+    //Need to add a loop around before setting the Shifted Array
+        shiftedArray[i] = parseFloat(unicodeArray[i]) + parseFloat(shift);
+      }
     }
     return shiftedArray;
   }
@@ -24,9 +31,10 @@ const caesar = function(oString, shift) {
   }
 
 //testing output before entire caeser is complete
-  console.log(shiftUnicode(getUnicode(oString), shift))
+ return shiftUnicode(getUnicode(oString), shift);
 
 };
 
+console.log(caesar('Zoo]', 8))
 // Do not edit below this line
-module.exports = caesar;
+//module.exports = caesar;
