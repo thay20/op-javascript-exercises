@@ -11,30 +11,57 @@ const caesar = function(oString, shift) {
 
   function shiftUnicode(unicodeArray, shift) {
     let shiftedArray = [];
+    shift = shift % 26;
 
-//add an if(maybe switch?) to only shift alpha unicode range, and loop if necessary
     for(let i = 0; i < unicodeArray.length; i++){
-      if(unicodeArray[i] < 66 || unicodeArray[i] > 122) {
+
+      if(unicodeArray[i] < 65 || unicodeArray[i] > 122) {
         shiftedArray[i] = unicodeArray[i];
       } else if(unicodeArray[i] > 90 && unicodeArray[i] < 97) {
         shiftedArray[i] = unicodeArray[i];
       } else {
-    //Need to add a loop around before setting the Shifted Array
-        shiftedArray[i] = parseFloat(unicodeArray[i]) + parseFloat(shift);
+          if(unicodeArray[i] < 91) {
+              shiftedArray[i] = parseFloat(unicodeArray[i]) + parseFloat(shift);
+
+              //loop around if shifts beyound ALPHA unicode
+              if (shiftedArray[i] > 90) { 
+                shiftedArray[i] = shiftedArray[i] - 26;
+              } else if (shiftedArray[i] < 65) {
+                shiftedArray[i] = shiftedArray[i] + 26;
+              }
+          } else {
+              shiftedArray[i] = parseFloat(unicodeArray[i]) + parseFloat(shift);
+
+              //loop around if shifts beyound alpha unicode
+              if (shiftedArray[i] > 122) { 
+                shiftedArray[i] = shiftedArray[i] - 26;
+              } else if(shiftedArray[i] < 97){
+                shiftedArray[i] = shiftedArray[i] + 26;
+              }
+          }
       }
     }
     return shiftedArray;
   }
 
   function getShiftedString(shiftedArray) {
+    let cipher = '';
 
+    for(let i = 0; i < shiftedArray.length; i++) {
+      cipher += String.fromCharCode(shiftedArray[i]) 
+    }
+    return cipher;
   }
 
+  let unicode = getUnicode(oString);
+  let shiftedArray = shiftUnicode(unicode, shift);
+  let cipher = getShiftedString(shiftedArray);
+
+
 //testing output before entire caeser is complete
- return shiftUnicode(getUnicode(oString), shift);
+ return cipher;
 
 };
 
-console.log(caesar('Zoo]', 8))
 // Do not edit below this line
-//module.exports = caesar;
+module.exports = caesar;
